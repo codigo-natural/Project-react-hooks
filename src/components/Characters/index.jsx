@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useReducer, useMemo, useRef, useCallback } from 'react'
+import React, { useState, useReducer, useMemo, useRef, useCallback } from 'react'
+import useCharacters from '../../hooks/useCharacters';
 import Search from '../Search';
-
 // Initialize state to allow favorites to be tracked
 const initialState = {
   favorites: []
 }
+
+const API = 'https://rickandmortyapi.com/api/character/';
 
 // Reducer used with useReducer to add/remove user favorites
 const favoriteReducer = (state, action) => {
@@ -21,20 +23,14 @@ const favoriteReducer = (state, action) => {
 
 // Main component
 const Characters = () => {
-  // useState allows us to store and update data on a component level
-  const [characters, setCharacters] = useState([]);
   // useReducer allows us to manage different states (favorites in this instance) and dispatch changes to that state with an action object
   const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
   // useState to store the search value of a character
   const [search, setSearch] = useState('');
   const searchInput = useRef(null);
 
-  // useEffect to make a request to the Rick and Morty API when the component mounts
-  useEffect(() => {
-    fetch('https://rickandmortyapi.com/api/character/')
-      .then(response => response.json())
-      .then(data => setCharacters(data.results))
-  }, []);
+  const characters = useCharacters(API);
+
 
   // use the dispatch function from useReducer to add a character to our favorites state
   const handleClick = favorite => {
