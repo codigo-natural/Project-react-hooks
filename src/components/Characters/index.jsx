@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useMemo } from 'react'
+import React, { useState, useEffect, useReducer, useMemo, useRef } from 'react'
 
 // Initialize state to allow favorites to be tracked
 const initialState = {
@@ -26,6 +26,7 @@ const Characters = () => {
   const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
   // useState to store the search value of a character
   const [search, setSearch] = useState('');
+  const searchInput = useRef(null);
 
   // useEffect to make a request to the Rick and Morty API when the component mounts
   useEffect(() => {
@@ -40,8 +41,8 @@ const Characters = () => {
   }
 
   // Update the search value with useState
-  const handleSearch = (event) => {
-    setSearch(event.target.value)
+  const handleSearch = () => {
+    setSearch(searchInput.current.value);
   }
 
   // const filteredUsers = characters.filter((user) => {
@@ -70,6 +71,7 @@ const Characters = () => {
           type="text"
           placeholder="Search"
           value={search}
+          ref={searchInput}
           onChange={handleSearch}
         />
       </div>
