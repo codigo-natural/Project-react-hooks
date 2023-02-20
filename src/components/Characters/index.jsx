@@ -1,6 +1,7 @@
 import React, { useState, useReducer, useMemo, useRef, useCallback } from 'react'
 import useCharacters from '../../hooks/useCharacters';
 import Search from '../Search';
+import './styles.css'
 // Initialize state to allow favorites to be tracked
 const initialState = {
   favorites: []
@@ -73,17 +74,28 @@ const Characters = () => {
         handleSearch={handleSearch}
       />
 
-      {filteredUsers.map(character => (
-        <div className="item" key={character.id}>
-          <h2>{character.name}</h2>
-          {/* click handler to add user favorites to state */}
-          <button
-            type='button'
-            onClick={() => handleClick(character)}>
-            Agregar a Favoritos
-          </button>
-        </div>
-      ))}
+      <div className="container">
+        {filteredUsers.map(character => (
+          <div className="card" key={character.id}>
+            <figure>
+              <img src={character.image} alt="" />
+            </figure>
+              <h2>{character.name}</h2>
+            <aside>
+              <div className="description">
+                <p><span>Status: </span>{character.status}</p>
+                <p><span>Specie: </span>{character.species}</p>
+              </div>
+              <button
+                type='button'
+                onClick={() => handleClick(character)}>
+                Agregar a Favoritos
+              </button>
+            </aside>
+            {/* click handler to add user favorites to state */}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
