@@ -1,6 +1,7 @@
 import React, { useState, useReducer, useMemo, useRef, useCallback } from 'react'
 import useCharacters from '../../hooks/useCharacters';
 import Search from '../Search';
+import { FcSearch } from 'react-icons/fc'
 import './styles.css'
 // Initialize state to allow favorites to be tracked
 const initialState = {
@@ -68,11 +69,16 @@ const Characters = () => {
         </li>
       ))}
 
-      <Search
-        search={search}
-        searchInput={searchInput}
-        handleSearch={handleSearch}
-      />
+      <div className="search-bar">
+        <button>
+          <FcSearch />
+        </button>
+        <Search
+          search={search}
+          searchInput={searchInput}
+          handleSearch={handleSearch}
+        />
+      </div>
 
       <div className="container">
         {filteredUsers.map(character => (
@@ -80,7 +86,7 @@ const Characters = () => {
             <figure>
               <img src={character.image} alt="" />
             </figure>
-              <h2>{character.name}</h2>
+            <h2>{character.name}</h2>
             <aside>
               <div className="description">
                 <p><span>Status: </span>{character.status}</p>
